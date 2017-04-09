@@ -22,7 +22,8 @@ use std::string::String;
 
 use html5ever::parse_document;
 use html5ever::rcdom::{Document, Doctype, Text, Comment, Element, RcDom, Handle};
-use orbclient::{Color, EventOption, Renderer, Window, WindowFlag, K_BKSP, K_ESC, K_LEFT, K_RIGHT, K_DOWN, K_PGDN, K_UP, K_PGUP};
+use orbclient::{Color, EventOption, Renderer, Window, WindowFlag};
+use orbclient::keycode::*;
 use orbfont::Font;
 use tendril::TendrilSink;
 use url::Url;
@@ -626,33 +627,33 @@ fn main_window(arg: &str, font: &Font, font_bold: &Font) {
         for event in window.events() {
             match event.to_option() {
                 EventOption::Key(key_event) => if key_event.pressed {
-                    match key_event.scancode {
-                        K_ESC => return,
-                        K_LEFT => {
+                    match key_event.keycode {
+                        KC_ESC => return,
+                        KC_LEFT => {
                             redraw = true;
                             offset.0 = cmp::max(0, offset.0 - 60);
                         },
-                        K_RIGHT => {
+                        KC_RIGHT => {
                             redraw = true;
                             offset.0 = cmp::min(cmp::max(0, max_offset.0 - window_w), offset.0 + 60);
                         },
-                        K_UP => {
+                        KC_UP => {
                             redraw = true;
                             offset.1 = cmp::max(0, offset.1 - 60);
                         },
-                        K_PGUP => {
+                        KC_PGUP => {
                             redraw = true;
                             offset.1 = cmp::max(0, offset.1 - 600);
                         },
-                        K_DOWN => {
+                        KC_DOWN => {
                             redraw = true;
                             offset.1 = cmp::min(cmp::max(0, max_offset.1 - window_h), offset.1 + 60);
                         },
-                        K_PGDN => {
+                        KC_PGDN => {
                             redraw = true;
                             offset.1 = cmp::min(cmp::max(0, max_offset.1 - window_h), offset.1 + 600);
                         },
-                        K_BKSP => if let Some(last_url) = history.pop() {
+                        KC_BKSP => if let Some(last_url) = history.pop() {
                             url = last_url;
                             reload = true;
                         },
@@ -735,7 +736,7 @@ fn main() {
         loop {
             for event in window.events() {
                 if let EventOption::Key(key_event) = event.to_option() {
-                    if key_event.pressed && key_event.scancode == K_ESC {
+                    if key_event.pressed && key_event.keycode == KC_ESC {
                         return;
                     }
                 }

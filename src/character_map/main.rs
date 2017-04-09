@@ -7,14 +7,15 @@ use std::cmp::max;
 
 use std::env;
 
-use orbclient::{Color, Renderer, Window, EventOption, K_ESC};
+use orbclient::{Color, Renderer, Window, EventOption};
+use orbclient::keycode::KC_ESC;
 use orbfont::Font;
 
 fn event_loop(window: &mut Window){
     loop {
         for event in window.events() {
             if let EventOption::Key(key_event) = event.to_option() {
-                if key_event.pressed && key_event.scancode == K_ESC {
+                if key_event.pressed && key_event.keycode == KC_ESC {
                     return;
                 }
             }

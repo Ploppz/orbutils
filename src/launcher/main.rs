@@ -57,7 +57,8 @@ use std::os::unix::process::ExitStatusExt;
 use std::path::Path;
 use std::process::{Command, ExitStatus};
 
-use orbclient::{EventOption, Renderer, Window, K_ESC};
+use orbclient::{EventOption, Renderer, Window};
+use orbclient::keycode::KC_ESC;
 use orbimage::Image;
 use orbfont::Font;
 
@@ -256,8 +257,8 @@ fn bar_main() {
                                         true
                                     },
                                     EventOption::Key(key_event) => {
-                                        match key_event.scancode {
-                                            K_ESC => break 'start_choosing,
+                                        match key_event.keycode {
+                                            KC_ESC => break 'start_choosing,
                                             _ => false
                                         }
                                     },
